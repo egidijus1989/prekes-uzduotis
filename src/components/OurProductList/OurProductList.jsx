@@ -1,104 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import OurProduct from "../OurProduct/OurProduct";
+import * as service from "../../servises/ProductServices";
 
 export default function OurProductList() {
+  //////////////////////////////////////////////States//////////////////////////////////////////////////////////////
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [ourProducts, setOurProducts] = useState([]);
   const [productIdToDelete, setProductIdToDelete] = useState("");
   const [productIdToEdit, setProductIdToEdit] = useState("");
-  const [formData, setFormData] = useState({});
-  const [editedProduct, setEditedProduct] = useState({});
+  const [formData, setFormData] = useState({
+    title: "",
+    price: "",
+    description: "",
+    image: null,
+  });
+  const [editedProduct, setEditedProduct] = useState({
+    title: "",
+    price: "",
+    description: "",
+    image: null,
+  });
+  const token = currentUser.data.access_token;
+  const { id } = useParams();
+  //////////////////////////////////////////////Services/////////////////////////////////////////////////////////////////
+  const handleDeleteProduct = () => {
+    service.handleDeleteProduct(productIdToDelete, token, setOurProducts);
+  };
 
   useEffect(() => {
-    const fetchOurProducts = async () => {
-      try {
-        const res = await fetch(`https://demo-api.ideabridge.lt/api/products`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + currentUser.data.access_token,
-          },
-        });
-        const data = await res.json();
-        if (res.ok) {
-          setOurProducts(data.data.data);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
+    const getOurProducts = () => {
+      service.fetchOurProducts(token, setOurProducts);
     };
-    fetchOurProducts();
+    getOurProducts();
   }, []);
 
-  const handleDeleteProduct = async () => {
-    try {
-      const res = await fetch(
-        `https://demo-api.ideabridge.lt/api/products/${productIdToDelete}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + currentUser.data.access_token,
-          },
-        }
-      );
-      const data = await res.json();
-      setOurProducts((prev) =>
-        prev.filter((ourProduct) => ourProduct.id !== productIdToDelete)
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  const addProduct = (e) => {
+    e.preventDefault();
+    service.handleSubmit(
+      token,
+      formData.title,
+      formData.price,
+      formData.image,
+      formData.description
+    );
   };
 
-  const handleSubmit = async (e) => {
+  const editProduct = (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch(`https://demo-api.ideabridge.lt/api/products`, {
-        method: "POST",
-        headers: {
-          // "Content-Type": "application/json",
-          Authorization: "Bearer" + currentUser.data.access_token,
-        },
-        body: formData,
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+    service.editSubmit(
+      token,
+      editedProduct.title,
+      editedProduct.price,
+      editedProduct.image,
+      editedProduct.description,
+      productIdToEdit
+    );
   };
-
-  const editSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(
-        `https://demo-api.ideabridge.lt/api/products/${productIdToEdit}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer" + currentUser.data.access_token,
-          },
-          body: JSON.stringify(editedProduct),
-        }
-      );
-      const data = await res.json();
-      if (!res.ok) {
-        console.log(data.message);
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  console.log(formData);
   return (
     <div className="container">
+      {/* //////////////////////////////////////////////////Products//////////////////////////////////////////////////////////// */}
       {currentUser ? (
         <button
           type="button"
@@ -225,7 +188,7 @@ export default function OurProductList() {
               ></button>
             </div>
             <div className="modal-body">
-              <form action="" onSubmit={handleSubmit}>
+              <form action="" onSubmit={addProduct}>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -308,7 +271,7 @@ export default function OurProductList() {
               ></button>
             </div>
             <div className="modal-body">
-              <form action="" onSubmit={editSubmit}>
+              <form action="" onSubmit={editProduct}>
                 <div className="mb-3">
                   <input
                     type="text"
@@ -328,7 +291,7 @@ export default function OurProductList() {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Prekės kaina"
+                    placeholder="prekes kaina"
                     id="price"
                     name="price"
                     onChange={(e) =>
@@ -339,7 +302,7 @@ export default function OurProductList() {
                     }
                   />
                 </div>
-                {/* <div className="mb-3">
+                <div className="mb-3">
                   <input
                     type="file"
                     className="form-control"
@@ -350,11 +313,11 @@ export default function OurProductList() {
                     onChange={(e) =>
                       setEditedProduct({
                         ...editedProduct,
-                        image: e.target.files,
+                        image: e.target.files[0],
                       })
                     }
                   />
-                </div> */}
+                </div>
                 <div className="mb-3">
                   <input
                     type="text"
