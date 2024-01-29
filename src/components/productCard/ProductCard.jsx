@@ -5,7 +5,10 @@ import ProductPage from "../productPage/ProductPage";
 export default function (props) {
   return (
     <div>
-      <div className="card" style={{ width: "18rem" }}>
+      <div
+        className="card border border-dark rounded"
+        style={{ width: "18rem", height: "35rem", overflow: "auto" }}
+      >
         <img
           src={
             props.image_url ||

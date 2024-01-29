@@ -24,6 +24,7 @@ export default function OurProductList() {
     image: null,
   });
   const token = currentUser.data.access_token;
+
   const { id } = useParams();
   //////////////////////////////////////////////Services/////////////////////////////////////////////////////////////////
   const handleDeleteProduct = () => {
@@ -333,7 +334,11 @@ export default function OurProductList() {
                     }
                   />
                 </div>
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
                   Atnaujinti prekę
                 </button>
               </form>

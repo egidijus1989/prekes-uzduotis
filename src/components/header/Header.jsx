@@ -63,15 +63,21 @@ export default function Header() {
                   Produkto paieška
                 </a>
               </li>
-              <li className="nav-item">
-                <Link
-                  to="/ourProductList"
-                  className="nav-link active"
-                  aria-current="page"
-                >
-                  Produkto administravimas
-                </Link>
-              </li>
+              {/* ------------------------------------------------- */}
+              {currentUser ? (
+                <li className="nav-item">
+                  <Link
+                    to="/ourProductList"
+                    className="nav-link active"
+                    aria-current="page"
+                  >
+                    Produkto administravimas
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )}
+
               {/* ---------------------------------------------- */}
               {currentUser ? (
                 <li className="nav-item">
