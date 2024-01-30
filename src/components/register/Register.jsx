@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import * as service from "../../servises/Auth";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -35,7 +36,6 @@ export default function Register() {
       console.log(error.message);
     }
   };
-  console.log(formData);
   return (
     <div className="container">
       <h2 className="mt-3 text-center">Registruotis</h2>

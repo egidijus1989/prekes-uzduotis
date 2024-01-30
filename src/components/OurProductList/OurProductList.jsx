@@ -35,7 +35,7 @@ export default function OurProductList() {
 
   useEffect(() => {
     const getOurProducts = () => {
-      service.fetchOurProducts(token, setOurProducts);
+      service.fetchOurProducts(token, setOurProducts, setPages, url);
     };
     getOurProducts();
   }, []);
@@ -128,7 +128,26 @@ export default function OurProductList() {
         <p className="my-5 mx-auto">Jūs neturite produktų</p>
       )}
       {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
-
+      <div className="d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+          <ul className="pagination">
+            {pages.slice(1, pages.length - 1).map((page) => (
+              <li className="page-item" key={page.label}>
+                <button
+                  className="page-link"
+                  type="button"
+                  onClick={() => {
+                    SetUrl(page.url),
+                      service.fetchProducts(setOurProducts, setPages, url);
+                  }}
+                >
+                  {page.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
       {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
       <div
         className="modal fade"

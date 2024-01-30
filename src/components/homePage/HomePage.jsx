@@ -32,7 +32,7 @@ export default function HomePage() {
       <div className="d-flex justify-content-center">
         <nav aria-label="Page navigation example">
           <ul className="pagination">
-            {pages.map((page) => (
+            {pages.slice(1, pages.length - 1).map((page) => (
               <li className="page-item" key={page.label}>
                 <button
                   className="page-link"

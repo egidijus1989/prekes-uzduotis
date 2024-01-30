@@ -23,19 +23,28 @@ export const handleDeleteProduct = async (
   }
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-export const fetchOurProducts = async (token, setOurProducts) => {
+export const fetchOurProducts = async (
+  token,
+  setOurProducts,
+  setPages,
+  url
+) => {
   try {
-    const res = await fetch(`https://demo-api.ideabridge.lt/api/products`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer" + token,
-      },
-    });
+    const res = await fetch(
+      url || `https://demo-api.ideabridge.lt/api/products`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer" + token,
+        },
+      }
+    );
     const data = await res.json();
     console.log(data);
     if (res.ok) {
       setOurProducts(data.data.data);
+      setPages(data.data.links);
     }
   } catch (error) {
     console.log(error.message);
@@ -126,3 +135,4 @@ export const fetchProduct = async (setProduct, id, token) => {
     console.log(error);
   }
 };
+////////////////////////////////////////////////////////////////////////////////////////////////
