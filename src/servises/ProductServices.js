@@ -41,7 +41,6 @@ export const fetchOurProducts = async (
       }
     );
     const data = await res.json();
-    console.log(data);
     if (res.ok) {
       setOurProducts(data.data.data);
       setPages(data.data.links);
@@ -57,7 +56,6 @@ export const handleSubmit = async (token, title, price, image, description) => {
   formData.set("price", parseFloat(price));
   formData.set("description", description);
   formData.set("image", image);
-  console.log(formData);
   try {
     const res = await fetch(`https://demo-api.ideabridge.lt/api/products`, {
       method: "POST",

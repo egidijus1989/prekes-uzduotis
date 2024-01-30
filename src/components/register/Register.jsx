@@ -10,36 +10,19 @@ export default function Register() {
     password: "",
     password_confirmation: "",
   });
-
+  console.log(formData.name);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
-  const handleSubmit = async (e) => {
+  const registrationSubmission = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.password) {
-      return setErrorMessage("Please fill all fields");
-    }
-    try {
-      const res = await fetch(
-        "https://demo-api.ideabridge.lt/api/auth/register",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
-      const data = await res.json();
-      if (res.ok) {
-        navigate("/sign-in");
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
+    service.registration(formData);
+    navigate("/sign-in");
   };
   return (
     <div className="container">
       <h2 className="mt-3 text-center">Registruotis</h2>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={registrationSubmission}>
         <div className="mb-3">
           <input
             type="text"

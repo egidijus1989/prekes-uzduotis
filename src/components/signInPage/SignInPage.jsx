@@ -6,6 +6,7 @@ import {
   signInSuccess,
   signInFailure,
 } from "../../redux/user/UserSlice.js";
+import * as service from "../../servises/Auth.js";
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({});
@@ -15,35 +16,21 @@ export default function SignInPage() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
-  const handleSubmit = async (e) => {
+  const singIn = (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      return dispatch(signInFailure("Please fill all the fields"));
-    }
-    try {
-      dispatch(signInStart());
-      const res = await fetch("https://demo-api.ideabridge.lt/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signInFailure(data.message));
-      }
-
-      if (res.ok) {
-        dispatch(signInSuccess(data));
-        navigate("/");
-      }
-    } catch (error) {
-      dispatch(signInFailure(error.message));
-    }
+    service.singInSubmit(
+      formData,
+      dispatch,
+      signInStart,
+      signInSuccess,
+      signInFailure
+    );
+    navigate("/");
   };
   return (
     <div className="container">
       <h2 className="mt-3 text-center">Prisijungti</h2>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={singIn}>
         <div className="mb-3">
           <input
             type="email"
