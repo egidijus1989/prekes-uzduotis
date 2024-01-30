@@ -23,6 +23,8 @@ export default function OurProductList() {
     description: "",
     image: null,
   });
+  const [pages, setPages] = useState([]);
+  const [url, SetUrl] = useState("");
   const token = currentUser.data.access_token;
 
   const { id } = useParams();
@@ -125,6 +127,8 @@ export default function OurProductList() {
       ) : (
         <p className="my-5 mx-auto">Jūs neturite produktų</p>
       )}
+      {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
+
       {/* /////////////////////////////////////////////////////////////////////////////////////////// */}
       <div
         className="modal fade"

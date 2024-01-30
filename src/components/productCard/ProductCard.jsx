@@ -16,6 +16,7 @@ export default function (props) {
           }
           className="card-img-top"
           alt={props.title}
+          style={{ width: "17rem", height: "17rem", objectFit: "cover" }}
         ></img>
         <div className="card-body">
           <h1>{props.title}</h1>

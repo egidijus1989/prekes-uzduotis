@@ -33,6 +33,7 @@ export const fetchOurProducts = async (token, setOurProducts) => {
       },
     });
     const data = await res.json();
+    console.log(data);
     if (res.ok) {
       setOurProducts(data.data.data);
     }
