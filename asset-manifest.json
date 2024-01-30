@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/prekes-uzduotis/static/css/main.5bb476fb.css",
+    "main.js": "/prekes-uzduotis/static/js/main.3d0ddacb.js",
+    "index.html": "/prekes-uzduotis/index.html",
+    "main.5bb476fb.css.map": "/prekes-uzduotis/static/css/main.5bb476fb.css.map",
+    "main.3d0ddacb.js.map": "/prekes-uzduotis/static/js/main.3d0ddacb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5bb476fb.css",
+    "static/js/main.3d0ddacb.js"
+  ]
+}
