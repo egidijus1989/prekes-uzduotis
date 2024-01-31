@@ -2,14 +2,14 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import ProductPage from "../productPage/ProductPage";
 import { useSelector } from "react-redux";
+import "./productCard.scss";
 
 export default function (props) {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    // {props.index === 1 ? () : ()}
     <div
       className={`card border border-dark rounded ${props.index}`}
-      style={{ width: "18rem", height: "35rem", overflow: "auto" }}
+      // style={{ width: "18rem", height: "35rem", overflow: "auto" }}
     >
       <img
         src={
@@ -18,7 +18,7 @@ export default function (props) {
         }
         className="card-img-top"
         alt={props.title}
-        style={{ width: "17rem", height: "17rem", objectFit: "cover" }}
+        style={{ height: "17rem", objectFit: "cover" }}
       ></img>
       <div className="card-body">
         <h1>{props.title}</h1>

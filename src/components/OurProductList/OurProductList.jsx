@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import OurProduct from "../OurProduct/OurProduct";
 import * as service from "../../servises/ProductServices";
 
 export default function OurProductList() {
@@ -41,7 +40,7 @@ export default function OurProductList() {
   }, []);
 
   const addProduct = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     service.handleSubmit(
       token,
       formData.title,
@@ -62,6 +61,7 @@ export default function OurProductList() {
       editedProduct.description,
       productIdToEdit
     );
+    service.fetchOurProducts(token, setOurProducts, setPages, url); //pasitestavimas
   };
   return (
     <div className="container">

@@ -107,6 +107,7 @@ export const fetchProducts = async (setProducts, setPages, url) => {
     if (res.ok) {
       setProducts(data.data.data);
       setPages(data.data.links);
+      console.log(data.data.links);
     }
   } catch (error) {
     console.log(error);
