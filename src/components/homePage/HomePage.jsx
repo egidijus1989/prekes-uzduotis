@@ -15,17 +15,26 @@ export default function HomePage() {
     };
     getProducts();
   }, []);
+
+  function max100Symbols(text) {
+    if (text && text.length > 100) {
+      return text.slice(0, 100);
+    } else {
+      return text;
+    }
+  }
   return (
     <>
       <div className="my-5 container d-flex flex-wrap gap-5 me-auto justify-content-around">
-        {products.map((product) => (
+        {products.map((product, index) => (
           <ProductCard
             key={product.id}
             image_url={product.image_url}
             title={product.title}
-            description={product.description}
+            description={max100Symbols(product.description)}
             price={product.price}
             id={product.id}
+            index={(index % 4) + 1}
           />
         ))}
       </div>

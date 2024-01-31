@@ -41,7 +41,7 @@ export default function OurProductList() {
   }, []);
 
   const addProduct = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     service.handleSubmit(
       token,
       formData.title,
@@ -49,6 +49,7 @@ export default function OurProductList() {
       formData.image,
       formData.description
     );
+    service.fetchOurProducts(token, setOurProducts, setPages, url); //pasitestavimas
   };
 
   const editProduct = (e) => {
